@@ -2,13 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VideoController;
 use Inertia\Inertia;
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return Inertia::render('welcome');
-})->name('welcome');
+})->name('welcome');*/
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Specifically for google login
 //Route::get('/oauth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
@@ -30,11 +34,11 @@ Route::get('/videos', [VideoController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('videos.index');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
-});
+//Route::middleware(['auth', 'verified'])->group(function () {
+//    Route::get('dashboard', function () {
+//        return Inertia::render('dashboard');
+//    })->name('dashboard');
+//});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
