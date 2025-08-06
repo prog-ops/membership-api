@@ -18,15 +18,24 @@ class SocialiteController extends Controller
     /**
      * Redirect user ke halaman otentikasi Google.
      */
-    public function redirect()
+    public function redirectGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
     /**
+     * Redirect user ke halaman otentikasi provider.
+     */
+    public function redirect(string $provider)
+    {
+        // Method dinamis berdasarkan provider dari URL
+        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
      * Tangani callback dari Google setelah otentikasi.
      */
-    public function callback()
+    public function callbackGoogle()
     {
         try {
             // Mendapatkan data user dari Google
@@ -56,6 +65,38 @@ class SocialiteController extends Controller
             // Jika ada error, kembali ke halaman login
             // Log::error('Google login failed: ' . $th->getMessage());
             return redirect('/login')->with('error', 'Login with Google failed.');
+        }
+    }
+
+    /**
+     * Tangani callback dari provider setelah otentikasi.
+     */
+    public function callback(string $provider)
+    {
+        try {
+            // Dapatkan data user dari provider yang sesuai
+            $providerUser = Socialite::driver($provider)->user();
+
+            // Logika find or create sekarang juga dinamis
+            $user = User::updateOrCreate(
+                [
+                    'provider_id' => $providerUser->getId(),
+                    'provider_name' => $provider,
+                ],
+                [
+                    'name' => $providerUser->getName(),
+                    'email' => $providerUser->getEmail(),
+                    'email_verified_at' => now(),
+                ]
+            );
+
+            Auth::login($user);
+
+            return redirect('/dashboard');
+
+        } catch (\Throwable $th) {
+            Log::error('Socialite login failed for provider: '.$provider, ['error' => $th->getMessage()]);
+            return redirect('/login')->with('error', 'Login with ' . ucfirst($provider) . ' failed.');
         }
     }
 }
