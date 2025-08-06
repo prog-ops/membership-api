@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\SocialiteController;
 use Inertia\Inertia;
 
@@ -15,7 +16,9 @@ Route::get('/login-success', function(){
     return Inertia::render('auth/login-success');
 })->name('login.success');
 
-
+Route::get('/articles', [ArticleController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('articles.index');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
