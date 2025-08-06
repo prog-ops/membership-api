@@ -10,8 +10,13 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('welcome');
 
-Route::get('/oauth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
-Route::get('/oauth/{provider}/callback', [SocialiteController::class, 'callback'])->name('google.callback');
+// Specifically for google login
+//Route::get('/oauth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('google.redirect');
+//Route::get('/oauth/{provider}/callback', [SocialiteController::class, 'callback'])->name('google.callback');
+
+// Login using google, facebook, etc
+Route::get('/auth/{provider}/redirect', [SocialiteController::class, 'redirect'])->name('socialite.redirect');
+Route::get('/auth/{provider}/callback', [SocialiteController::class, 'callback'])->name('socialite.callback');
 
 Route::get('/login-success', function(){
     return Inertia::render('auth/login-success');
