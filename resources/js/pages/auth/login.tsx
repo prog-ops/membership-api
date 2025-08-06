@@ -109,9 +109,16 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                     <a
                         // href={route('google.redirect')}
-                        href={route('google.redirect', { provider: 'google' })}
-                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        // href={route('google.redirect', { provider: 'google' })}
+                        href={route('socialite.redirect', { provider: 'google' })}
+                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Login with Google
+                    </a>
+
+                    <a
+                        href={route('socialite.redirect', { provider: 'facebook' })}
+                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Login with Facebook
                     </a>
                 </div>
 
