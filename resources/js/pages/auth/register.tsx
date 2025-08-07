@@ -119,9 +119,15 @@ export default function Register() {
                     </div>
 
                     <a
-                        href={route('google.redirect', { provider: 'google' })}
+                        href={route('socialite.redirect', { provider: 'google' })}
                         className="inline-flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                         Register with Google
+                    </a>
+
+                    <a
+                        href={route('socialite.redirect', { provider: 'facebook' })}
+                        className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Register with Facebook
                     </a>
                 </div>
 
