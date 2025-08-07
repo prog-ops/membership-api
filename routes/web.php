@@ -7,9 +7,9 @@ use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VideoController;
 use Inertia\Inertia;
 
-/*Route::get('/', function () {
+Route::get('/', function () {
     return Inertia::render('welcome');
-})->name('welcome');*/
+})->name('welcome');
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
